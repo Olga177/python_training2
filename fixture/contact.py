@@ -15,46 +15,18 @@ class ContactHelper:
         # Open add contact page
         self.open_new_entry_page()
         # Populate contact form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.first_name)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.last_name)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.address)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(contact.mobile_phone)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact.email)
+        self.fill_contact_form(contact)
         # Submitting contact form
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
 
     def edit_first_contact(self, contact):
         wd = self.app.wd
         # Select first contact
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_contact()
         # Find edit element and click it to open edit form
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         # Populate edit contact form
-        wd.find_element_by_name("firstname").click()
-        wd.find_element_by_name("firstname").clear()
-        wd.find_element_by_name("firstname").send_keys(contact.first_name)
-        wd.find_element_by_name("lastname").click()
-        wd.find_element_by_name("lastname").clear()
-        wd.find_element_by_name("lastname").send_keys(contact.last_name)
-        wd.find_element_by_name("address").click()
-        wd.find_element_by_name("address").clear()
-        wd.find_element_by_name("address").send_keys(contact.address)
-        wd.find_element_by_name("mobile").click()
-        wd.find_element_by_name("mobile").clear()
-        wd.find_element_by_name("mobile").send_keys(contact.mobile_phone)
-        wd.find_element_by_name("email").click()
-        wd.find_element_by_name("email").clear()
-        wd.find_element_by_name("email").send_keys(contact.email)
+        self.fill_contact_form(contact)
         # Submitting contact form
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[1]").click()
         self.back_home()
@@ -63,10 +35,34 @@ class ContactHelper:
         wd = self.app.wd
         self.back_home()
         # Select first contact
-        wd.find_element_by_name("selected[]").click()
+        self.select_first_contact()
         # Delete first contact
         # Click edit icon then click delete button
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
         # wd.switch_to_alert().accept()
         self.back_home()
+
+    def select_first_contact(self):
+        wd = self.app.wd
+        wd.find_element_by_name("selected[]").click()
+
+    def count_contacts(self):
+        wd = self.app.wd
+        self.back_home()
+        return len(wd.find_elements_by_name("selected[]"))
+
+    def change_contact_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+    def fill_contact_form(self, contact):
+        wd = self.app.wd
+        self.change_contact_field_value("firstname", contact.first_name)
+        self.change_contact_field_value("lastname", contact.last_name)
+        self.change_contact_field_value("address", contact.address)
+        self.change_contact_field_value("mobile", contact.mobile_phone)
+        self.change_contact_field_value("email", contact.email)
