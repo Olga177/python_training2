@@ -4,14 +4,11 @@ class ContactHelper:
 
     def open_new_entry_page(self):
         wd = self.app.wd
-        # if not (len(wd.find_elements_by_name("add")) > 0):
-        #     wd.find_element_by_link_text("add new").click()
         wd.find_element_by_link_text("add new").click()
+
 
     def back_home(self):
         wd = self.app.wd
-        # if not (len(wd.find_elements_by_name("add")) > 0):
-        #     wd.find_element_by_link_text("home").click()
         wd.find_element_by_link_text("home")
 
 
