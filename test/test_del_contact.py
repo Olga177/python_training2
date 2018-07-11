@@ -5,5 +5,6 @@ def test_delete_first_contact(app):
     if (app.contact.count_contacts() == 0):
         app.contact.add_contact(Contact(first_name="first_name", last_name="last_name",
                                         address="address", mobile_phone="mobile_phone", email="email"))
-    else:
-        app.contact.delete_first_contact()
+
+    return app.contact.delete_first_contact()
+

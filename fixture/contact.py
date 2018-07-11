@@ -9,8 +9,13 @@ class ContactHelper:
 
     def back_home(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home")
+        if (self.amount_of_elements() < 1):
+            wd.find_element_by_link_text("home").click()
 
+    def amount_of_elements(self):
+        wd = self.app.wd
+        amount = (len(wd.find_elements_by_xpath("//table[@id='maintable']")))
+        return amount
 
     def add_contact(self, contact):
         wd = self.app.wd
