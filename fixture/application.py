@@ -20,10 +20,15 @@ class Application:
         except:
             return False
 
-
     def open_home_page(self):
         wd = self.wd
-        wd.get("http://localhost/addressbook/")
+        if (self.amount_of_elements() < 1):
+            wd.get("http://localhost/addressbook/")
 
     def destroy(self):
         self.wd.quit()
+
+    def amount_of_elements(self):
+        wd = self.wd
+        return (len(wd.find_elements_by_xpath("//table[@id='maintable']")))
+
