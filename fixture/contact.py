@@ -4,11 +4,16 @@ class ContactHelper:
 
     def open_new_entry_page(self):
         wd = self.app.wd
+        # if not (len(wd.find_elements_by_name("add")) > 0):
+        #     wd.find_element_by_link_text("add new").click()
         wd.find_element_by_link_text("add new").click()
 
     def back_home(self):
         wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
+        # if not (len(wd.find_elements_by_name("add")) > 0):
+        #     wd.find_element_by_link_text("home").click()
+        wd.find_element_by_link_text("home")
+
 
     def add_contact(self, contact):
         wd = self.app.wd
@@ -18,6 +23,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         # Submitting contact form
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+
 
     def edit_first_contact(self, contact):
         wd = self.app.wd
@@ -31,6 +37,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[1]").click()
         self.back_home()
 
+
     def delete_first_contact(self):
         wd = self.app.wd
         self.back_home()
@@ -43,14 +50,17 @@ class ContactHelper:
         # wd.switch_to_alert().accept()
         self.back_home()
 
+
     def select_first_contact(self):
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
+
 
     def count_contacts(self):
         wd = self.app.wd
         self.back_home()
         return len(wd.find_elements_by_name("selected[]"))
+
 
     def change_contact_field_value(self, field_name, text):
         wd = self.app.wd
@@ -59,6 +69,7 @@ class ContactHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
+
     def fill_contact_form(self, contact):
         wd = self.app.wd
         self.change_contact_field_value("firstname", contact.first_name)
@@ -66,3 +77,4 @@ class ContactHelper:
         self.change_contact_field_value("address", contact.address)
         self.change_contact_field_value("mobile", contact.mobile_phone)
         self.change_contact_field_value("email", contact.email)
+
