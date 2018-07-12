@@ -86,11 +86,14 @@ class ContactHelper:
         # Go to home page
         self.back_home()
         contacts = []
-        # Find all elements with the name "selected[]"
-        for element in wd.find_elements_by_name("selected[]"):
-            text = element.get_attribute('title')
-            ln = text[8:19]
-            fn = text [19:30]
-            id = element.get_attribute('value')
+        # Find all elements with the name "entry"
+        for element in wd.find_elements_by_name("entry"):
+            # Find elements inside element with the name "entry"
+            element1 = element.find_element_by_name('selected[]')
+            element2 = element.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[2]")
+            element3 = element.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[3]")
+            ln = element2.text
+            fn = element3.text
+            id = element1.get_attribute('value')
             contacts.append(Contact(first_name=fn, last_name=ln, id=id))
         return contacts
