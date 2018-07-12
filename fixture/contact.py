@@ -1,3 +1,5 @@
+from model.contact import Contact
+
 class ContactHelper:
     def __init__(self, app):
         self.app = app
@@ -79,3 +81,20 @@ class ContactHelper:
         self.change_contact_field_value("mobile", contact.mobile_phone)
         self.change_contact_field_value("email", contact.email)
 
+    def get_contact_list(self):
+        wd = self.app.wd
+        # Go to home page
+        self.back_home()
+        contacts = []
+        for element in wd.find_elements_by_name("selected[]"):
+            # text = element.text
+            text = element.get_attribute('title')
+            ln = text[8:19]
+            fn = text [19:30]
+            id = element.get_attribute('value')
+            # print('8888888888888 text = ', text, '8888888   id = ', id)
+            print('8888888888888 ln = ', ln, '8888888   fn = ', fn)
+            contacts.append(Contact(first_name=fn, last_name=ln, id=id))
+            # print ('************  contacts = ', contacts)
+            print ('^^^^^^^^^  length of contacts = ', len(contacts))
+        return contacts
