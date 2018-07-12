@@ -86,15 +86,11 @@ class ContactHelper:
         # Go to home page
         self.back_home()
         contacts = []
+        # Find all elements with the name "selected[]"
         for element in wd.find_elements_by_name("selected[]"):
-            # text = element.text
             text = element.get_attribute('title')
             ln = text[8:19]
             fn = text [19:30]
             id = element.get_attribute('value')
-            # print('8888888888888 text = ', text, '8888888   id = ', id)
-            print('8888888888888 ln = ', ln, '8888888   fn = ', fn)
             contacts.append(Contact(first_name=fn, last_name=ln, id=id))
-            # print ('************  contacts = ', contacts)
-            print ('^^^^^^^^^  length of contacts = ', len(contacts))
         return contacts
