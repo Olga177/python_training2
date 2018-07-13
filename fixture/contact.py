@@ -96,9 +96,11 @@ class ContactHelper:
             # Find all elements with the name "entry"
             for element in wd.find_elements_by_name("entry"):
                 # Find elements inside element with the name "entry"
-                element1 = element.find_element_by_name('selected[]')
-                element2 = element.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[2]")
-                element3 = element.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[3]")
+                # element1 = element.find_element_by_name('selected[]')
+                elementList = element.find_elements_by_tag_name("td")
+                element1 = elementList[0]
+                element2 = elementList[1]
+                element3 = elementList[2]
                 ln = element2.text
                 fn = element3.text
                 id = element1.get_attribute('value')
