@@ -26,6 +26,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         # Submitting contact form
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.contact_cache = None
 
 
     def edit_first_contact(self, contact):
@@ -39,6 +40,7 @@ class ContactHelper:
         # Submitting contact form
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[1]").click()
         self.back_home()
+        self.contact_cache = None
 
 
     def delete_first_contact(self):
@@ -52,6 +54,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
         # wd.switch_to_alert().accept()
         self.back_home()
+        self.contact_cache = None
 
 
     def select_first_contact(self):
@@ -81,19 +84,21 @@ class ContactHelper:
         self.change_contact_field_value("mobile", contact.mobile_phone)
         self.change_contact_field_value("email", contact.email)
 
+    contact_cache = None
+
     def get_contact_list(self):
-        wd = self.app.wd
-        # Go to home page
-        self.back_home()
-        contacts = []
-        # Find all elements with the name "entry"
-        for element in wd.find_elements_by_name("entry"):
-            # Find elements inside element with the name "entry"
-            element1 = element.find_element_by_name('selected[]')
-            element2 = element.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[2]")
-            element3 = element.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[3]")
-            ln = element2.text
-            fn = element3.text
-            id = element1.get_attribute('value')
-            contacts.append(Contact(first_name=fn, last_name=ln, id=id))
-        return contacts
+        if self.contact_cache is None:
+            wd = self.app.wd
+            self.back_home()
+            self.contact_cache = []
+            # Find all elements with the name "entry"
+            for element in wd.find_elements_by_name("entry"):
+                # Find elements inside element with the name "entry"
+                element1 = element.find_element_by_name('selected[]')
+                element2 = element.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[2]")
+                element3 = element.find_element_by_xpath("//div/div[4]/form[2]/table/tbody/tr[2]/td[3]")
+                ln = element2.text
+                fn = element3.text
+                id = element1.get_attribute('value')
+                self.contact_cache.append(Contact(first_name=fn, last_name=ln, id=id))
+        return list(self.contact_cache)
