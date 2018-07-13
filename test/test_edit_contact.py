@@ -12,11 +12,11 @@ def test_edit_first_contact(app):
     # Edit with 'new contact' data
     app.contact.edit_first_contact(contact)
     # Get new list of contacts after editing
-    new_contacts = app.contact.get_contact_list()
     assert len(old_contacts) == app.contact.count_contacts()
-    # old_contacts[0] = contact
-    # print('contact[0] at the end  ==', contact)
-    # assert sorted(old_contacts, key= Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
+    # new_contacts = app.contact.get_contact_list()
+    # # old_contacts[0] = contact
+    # # print('contact[0] at the end  ==', contact)
+    # # assert sorted(old_contacts, key= Contact.id_or_max) == sorted(new_contacts, key=Contact.id_or_max)
 
 
 
