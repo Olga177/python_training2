@@ -29,15 +29,17 @@ class ContactHelper:
         self.contact_cache = None
 
 
-    def edit_first_contact(self, contact):
+    def edit_first_contact(self, new_contact):
         wd = self.app.wd
+        # Open home page
+        self.back_home()
         # Select first contact
         self.select_first_contact()
         # Find edit element and click it to open edit form
         wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
         # Populate edit contact form
-        self.fill_contact_form(contact)
-        # Submitting contact form
+        self.fill_contact_form(new_contact)
+        # Submitting updated contact form
         wd.find_element_by_xpath("//div[@id='content']/form[1]/input[1]").click()
         self.back_home()
         self.contact_cache = None
