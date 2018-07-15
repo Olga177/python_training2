@@ -1,5 +1,6 @@
 from model.contact import Contact
 
+
 class ContactHelper:
     def __init__(self, app):
         self.app = app
@@ -44,15 +45,18 @@ class ContactHelper:
         self.back_home()
         self.contact_cache = None
 
-
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         wd = self.app.wd
+        # Open home page
         self.back_home()
         # Select first contact
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         # Delete first contact
         # Click edit icon then click delete button
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        self.select_button_by_index(index)
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
         # wd.switch_to_alert().accept()
         self.back_home()
@@ -63,6 +67,18 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
 
+    def select_contact_by_index(self, index):
+        wd = self.app.wd
+        element = wd.find_elements_by_name("entry")[index]
+        element.click()
+
+    def select_button_by_index(self, index):
+        wd = self.app.wd
+        element1 = wd.find_elements_by_name("entry")[index]
+        # Find elements inside element with the name "entry"
+        elementList = element1.find_elements_by_tag_name("td")
+        element2 = elementList[7]
+        element2.find_element_by_tag_name('img').click()
 
     def count_contacts(self):
         wd = self.app.wd
@@ -96,7 +112,6 @@ class ContactHelper:
             # Find all elements with the name "entry"
             for element in wd.find_elements_by_name("entry"):
                 # Find elements inside element with the name "entry"
-                # element1 = element.find_element_by_name('selected[]')
                 element1 = element.find_element_by_name("selected[]")
                 elementList = element.find_elements_by_tag_name("td")
                 element2 = elementList[1]

@@ -6,20 +6,14 @@ def test_modify_group_name(app):
     if app.group.count() == 0:
         app.group.create(Group(name='test'))
     old_groups = app.group.get_group_list()
-    print('old groups at the begining =', old_groups)
     index = randrange(len(old_groups))
-    print('index = ', index)
     group = Group(name="new_name6")
-    print("group = ", group)
     group.id = old_groups[index].id
     print ("group.id = ", group.id)
     app.group.modify_group_by_index(index, group)
-    # app.group.modify_first_group(index, group)
     new_groups = app.group.get_group_list()
-    print(' new groups = ',new_groups)
     assert len(old_groups) == app.group.count()
-    old_groups[0] = group
-    print("old groups[0]", old_groups[0])
+    old_groups[index] = group
     assert sorted(old_groups, key=Group.id_or_max) == sorted(new_groups, key=Group.id_or_max)
 
 # def test_modify_group_header(app):
