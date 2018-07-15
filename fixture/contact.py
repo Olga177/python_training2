@@ -29,6 +29,8 @@ class ContactHelper:
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
         self.contact_cache = None
 
+    def edit_contact_first_group(self):
+        self.edit_contact_by_index(0)
 
     def edit_contact_by_index(self,index, new_contact):
         wd = self.app.wd
