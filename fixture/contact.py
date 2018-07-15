@@ -30,14 +30,14 @@ class ContactHelper:
         self.contact_cache = None
 
 
-    def edit_first_contact(self, new_contact):
+    def edit_contact_by_index(self,index, new_contact):
         wd = self.app.wd
         # Open home page
         self.back_home()
         # Select first contact
-        self.select_first_contact()
+        self.select_contact_by_index(index)
         # Find edit element and click it to open edit form
-        wd.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        self.select_edit_button_by_index(index)
         # Populate edit contact form
         self.fill_contact_form(new_contact)
         # Submitting updated contact form
@@ -56,7 +56,7 @@ class ContactHelper:
         self.select_contact_by_index(index)
         # Delete first contact
         # Click edit icon then click delete button
-        self.select_button_by_index(index)
+        self.select_edit_button_by_index(index)
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
         # wd.switch_to_alert().accept()
         self.back_home()
@@ -72,7 +72,7 @@ class ContactHelper:
         element = wd.find_elements_by_name("entry")[index]
         element.click()
 
-    def select_button_by_index(self, index):
+    def select_edit_button_by_index(self, index):
         wd = self.app.wd
         element1 = wd.find_elements_by_name("entry")[index]
         # Find elements inside element with the name "entry"
