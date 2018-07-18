@@ -134,13 +134,14 @@ class ContactHelper:
             for row in wd.find_elements_by_name("entry"):
                 # Find elements inside element with the name "entry"
                 cells = row.find_elements_by_tag_name("td")
-                first_name = cells[1].text
-                last_name = cells[2].text
+                last_name = cells[1].text
+                first_name = cells[2].text
                 id = cells[0].find_element_by_tag_name('input').get_attribute('value')
+                address = cells[3].text
                 all_phones = cells[5].text
                 all_emails = cells[4].text
-                print('in get contact list, all_emails = ', all_emails, "\n", "====================")
-                self.contact_cache.append(Contact(first_name=first_name, last_name=last_name, id=id,
+                self.contact_cache.append(Contact(first_name=first_name, last_name=last_name,
+                                                  address = address, id=id,
                                                   all_phones_from_home_page = all_phones,
                                                   all_emails_from_home_page = all_emails))
         return list(self.contact_cache)
@@ -165,6 +166,7 @@ class ContactHelper:
         self.open_contact_to_edit_by_index(index)
         first_name = wd.find_element_by_name('firstname').get_attribute('value')
         last_name = wd.find_element_by_name('lastname').get_attribute('value')
+        address = wd.find_element_by_name('address').get_attribute('value')
         id = wd.find_element_by_name('id').get_attribute('value')
         home_phone = wd.find_element_by_name('home').get_attribute('value')
         work_phone = wd.find_element_by_name('work').get_attribute('value')
@@ -173,7 +175,7 @@ class ContactHelper:
         email1 = wd.find_element_by_name('email').get_attribute('value')
         email2 = wd.find_element_by_name('email2').get_attribute('value')
         email3 = wd.find_element_by_name('email3').get_attribute('value')
-        return Contact(first_name=first_name, last_name=last_name, id=id,
+        return Contact(first_name=first_name, last_name=last_name,address=address, id=id,
                        home_phone=home_phone, mobile_phone=mobile_phone,
                        work_phone=work_phone, secondary_phone=secondary_phone,
                        email1=email1, email2=email2,email3=email3)
