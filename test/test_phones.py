@@ -1,21 +1,28 @@
+from random import randrange
 import re
 
 def test_phones_on_home_page(app):
-    contact_from_home_page = app.contact.get_contact_list()[0]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    list_of_contacts_from_home_page = app.contact.get_contact_list()
+    index = randrange(len(list_of_contacts_from_home_page))
+    contact_from_home_page = list_of_contacts_from_home_page[index]
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert contact_from_home_page.all_phones_from_home_page == merge_phones_like_on_home_page(contact_from_edit_page)
 
 
 def test_names_and_address(app):
-    contact_from_home_page = app.contact.get_contact_list()[0]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    list_of_contacts_from_home_page = app.contact.get_contact_list()
+    index = randrange (len(list_of_contacts_from_home_page))
+    contact_from_home_page = list_of_contacts_from_home_page[index]
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert clear(contact_from_home_page.first_name) == clear(contact_from_edit_page.first_name)
     assert clear(contact_from_home_page.last_name) == clear(contact_from_edit_page.last_name)
     assert clear(contact_from_home_page.address) == clear(contact_from_edit_page.address)
 
 def test_emails_on_home_page(app):
-    contact_from_home_page = app.contact.get_contact_list()[0]
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(0)
+    list_of_contacts_from_home_page = app.contact.get_contact_list()
+    index = randrange(len(list_of_contacts_from_home_page))
+    contact_from_home_page = list_of_contacts_from_home_page[index]
+    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
     assert contact_from_home_page.all_emails_from_home_page == merge_emails_like_on_homepage(contact_from_edit_page)
 
 
