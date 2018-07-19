@@ -10,10 +10,11 @@ def random_string(prefix, maxlen):
 
 
 
-test_data = [Group(name="", header="", footer="")] +[Group(name=random_string("name",10),
-                                                           header=random_string("header",20),
-                                                           footer=random_string("footer",20))
-    for i in range(5)
+test_data = [
+    Group(name=name, header=random_string("header",20),footer=random_string("footer",20))
+    for name  in ["", random_string("name", 10)]
+    for header in ["", random_string("header",20)]
+    for footer in ["", random_string("footer",20)]
 ]
 
 
