@@ -101,9 +101,13 @@ class ContactHelper:
         self.change_contact_field_value("firstname", contact.first_name)
         self.change_contact_field_value("lastname", contact.last_name)
         self.change_contact_field_value("address", contact.address)
+        self.change_contact_field_value("home", contact.home_phone)
         self.change_contact_field_value("mobile", contact.mobile_phone)
-        self.change_contact_field_value("email", contact.email)
-
+        self.change_contact_field_value("work", contact.work_phone)
+        self.change_contact_field_value("phone2", contact.secondary_phone)
+        self.change_contact_field_value("email", contact.email1)
+        self.change_contact_field_value("email2", contact.email2)
+        self.change_contact_field_value("email3", contact.email3)
 
     contact_cache = None
 
@@ -117,12 +121,16 @@ class ContactHelper:
                 # Find elements inside element with the name "entry"
                 element1 = element.find_element_by_name("selected[]")
                 elementList = element.find_elements_by_tag_name("td")
-                element2 = elementList[1]
-                element3 = elementList[2]
-                ln = element2.text
-                fn = element3.text
+                last_name = elementList[1].text
+                first_name = elementList[2].text
+                address = elementList[3].text
+                all_phones = elementList[4].text
+                all_emails = elementList[5].text
                 id = element1.get_attribute('value')
-                self.contact_cache.append(Contact(first_name=fn, last_name=ln, id=id))
+                self.contact_cache.append(Contact(first_name=first_name, last_name=last_name, address=address, id=id,
+                                                  all_phones_from_home_page=all_phones,
+                                                  all_emails_from_home_page=all_emails))
+
         return list(self.contact_cache)
 
     def get_contact_list(self):
@@ -141,9 +149,9 @@ class ContactHelper:
                 all_phones = cells[5].text
                 all_emails = cells[4].text
                 self.contact_cache.append(Contact(first_name=first_name, last_name=last_name,
-                                                  address = address, id=id,
-                                                  all_phones_from_home_page = all_phones,
-                                                  all_emails_from_home_page = all_emails))
+                                                  address=address, id=id,
+                                                  all_phones_from_home_page=all_phones,
+                                                  all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
 
     def open_contact_to_edit_by_index(self, index):
@@ -175,10 +183,10 @@ class ContactHelper:
         email1 = wd.find_element_by_name('email').get_attribute('value')
         email2 = wd.find_element_by_name('email2').get_attribute('value')
         email3 = wd.find_element_by_name('email3').get_attribute('value')
-        return Contact(first_name=first_name, last_name=last_name,address=address, id=id,
+        return Contact(first_name=first_name, last_name=last_name, address=address, id=id,
                        home_phone=home_phone, mobile_phone=mobile_phone,
                        work_phone=work_phone, secondary_phone=secondary_phone,
-                       email1=email1, email2=email2,email3=email3)
+                       email1=email1, email2=email2, email3=email3)
 
     def get_contact_from_view_page(self, index):
         wd = self.app.wd
