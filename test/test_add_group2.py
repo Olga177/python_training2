@@ -5,15 +5,16 @@ import string
 import re
 
 def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits +" "
+    symbols = string.ascii_letters + string.digits + " "
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
+test_data = [Group(name="", header="", footer="")]
 
-test_data = [Group(name="", header="", footer="")] + [
-    Group(name=random_string("name", 10), header=random_string("header", 20), footer=random_string("footer", 20))
-    for i in range(5)
-]
-
+for i in range(5):
+    group = Group(name=random_string("name", 10),
+                  header=random_string("header", 20),
+                  footer=random_string("footer", 20))
+    test_data.append(group)
 
 @pytest.mark.parametrize("group", test_data, ids=[repr(x) for x in test_data])
 def test_add_group(app, group):
