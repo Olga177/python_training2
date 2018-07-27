@@ -2,7 +2,7 @@ from model.group import Group
 import pytest
 import random
 import string
-import re
+from data.add_group import constant as test_data
 
 def random_string(prefix, maxlen):
     symbols = string.ascii_letters + string.digits + " "
