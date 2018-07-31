@@ -30,6 +30,7 @@ def app(request):
 
 @pytest.fixture(scope = "session")
 def db(request):
+    print('inside db fixture')
     db_config = load_config( request.config.getoption("--target"))["db"]
     dbfixture = DbFixture(host=db_config['host'], name=db_config['name'], user =db_config['user'], password = db_config['password'])
     def fin():
@@ -69,6 +70,5 @@ def load_from_module(module):
 
 
 def load_from_json(file):
-    print('in load_from_json file befor opening file = ', file)
     with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "data\%s.json" % file)) as f:
         return jsonpickle.decode(f.read())
