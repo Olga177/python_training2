@@ -47,6 +47,23 @@ class ContactHelper:
         self.open_home_page()
         self.contact_cache = None
 
+    def edit_contact_by_id(self, id, new_contact):
+        wd = self.app.wd
+        # Open home page
+        self.open_home_page()
+        # Select first contact
+        self.select_contact_by_id(id)
+        # Find edit element and click it to open edit form
+        self.select_edit_button_by_id(id)
+        # Populate edit contact form
+        self.fill_contact_form(new_contact)
+        # Submitting updated contact form
+        wd.find_element_by_xpath("//div[@id='content']/form[1]/input[1]").click()
+        self.open_home_page()
+        self.contact_cache = None
+
+
+
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
 
@@ -56,10 +73,24 @@ class ContactHelper:
         self.open_home_page()
         # Select first contact
         self.select_contact_by_index(index)
-        # Delete first contact
+        # Delete contact with particular index
         # Click edit icon then click delete button
         self.select_edit_button_by_index(index)
         wd.find_element_by_xpath("//div[@id='content']/form[2]/input[2]").click()
+        # wd.switch_to_alert().accept()
+        self.open_home_page()
+        self.contact_cache = None
+
+    def delete_contact_by_id(self, id):
+        print('in delete_contact_by_id: id = ', id)
+        wd = self.app.wd
+        # Open home page
+        self.open_home_page()
+        # Select first contact
+        self.select_contact_by_id(id)
+        # Delete  contact with specified id
+        wd.find_element_by_xpath("//div[@id='content']/form[@name='MainForm']/div[@class='left']/input[@value='Delete']").click()
+        wd.switch_to_alert().accept()
         # wd.switch_to_alert().accept()
         self.open_home_page()
         self.contact_cache = None
@@ -74,12 +105,27 @@ class ContactHelper:
         element = wd.find_elements_by_name("entry")[index]
         element.click()
 
+    def select_contact_by_id(self, id):
+        print(' in select_contact_by_id: id = ', id)
+        wd = self.app.wd
+        element = wd.find_element_by_css_selector("input[value='%s']" % id)
+        element.click()
+
     def select_edit_button_by_index(self, index):
         wd = self.app.wd
         element1 = wd.find_elements_by_name("entry")[index]
         # Find elements inside element with the name "entry"
         elementList = element1.find_elements_by_tag_name("td")
         element2 = elementList[7]
+        element2.find_element_by_tag_name('img').click()
+
+    def select_edit_button_by_id(self, id):
+        wd = self.app.wd
+        element2 = wd.find_element_by_css_selector("[href^= 'edit.php?id=%s']" % id)
+        print('in select_edit_button_by_id, element2 = ', element2)
+        # Find elements inside element with the particular id
+        # elementList = element1.find_elements_by_tag_name("td")
+        # element2 = elementList[7]
         element2.find_element_by_tag_name('img').click()
 
     def count_contacts(self):
