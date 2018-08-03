@@ -82,7 +82,6 @@ class ContactHelper:
         self.contact_cache = None
 
     def delete_contact_by_id(self, id):
-        print('in delete_contact_by_id: id = ', id)
         wd = self.app.wd
         # Open home page
         self.open_home_page()
@@ -106,7 +105,6 @@ class ContactHelper:
         element.click()
 
     def select_contact_by_id(self, id):
-        print(' in select_contact_by_id: id = ', id)
         wd = self.app.wd
         element = wd.find_element_by_css_selector("input[value='%s']" % id)
         element.click()
@@ -121,8 +119,8 @@ class ContactHelper:
 
     def select_edit_button_by_id(self, id):
         wd = self.app.wd
+        # Find element 'edit icon' by id
         element2 = wd.find_element_by_css_selector("[href^= 'edit.php?id=%s']" % id)
-        print('in select_edit_button_by_id, element2 = ', element2)
         # Find elements inside element with the particular id
         # elementList = element1.find_elements_by_tag_name("td")
         # element2 = elementList[7]
