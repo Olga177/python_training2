@@ -171,7 +171,7 @@ class ContactHelper:
                 all_phones = elementList[4].text
                 all_emails = elementList[5].text
                 id = element1.get_attribute('value')
-                self.contact_cache.append(Contact(first_name=first_name, last_name=last_name, address=address, id=id,
+                self.contact_cache.append(Contact(id=id, first_name=first_name, last_name=last_name, address=address,
                                                   all_phones_from_home_page=all_phones,
                                                   all_emails_from_home_page=all_emails))
 
@@ -192,8 +192,8 @@ class ContactHelper:
                 address = cells[3].text
                 all_phones = cells[5].text
                 all_emails = cells[4].text
-                self.contact_cache.append(Contact(first_name=first_name, last_name=last_name,
-                                                  address=address, id=id,
+                self.contact_cache.append(Contact(id=id,first_name=first_name, last_name=last_name,
+                                                  address=address,
                                                   all_phones_from_home_page=all_phones,
                                                   all_emails_from_home_page=all_emails))
         return list(self.contact_cache)
@@ -227,7 +227,7 @@ class ContactHelper:
         email1 = wd.find_element_by_name('email').get_attribute('value')
         email2 = wd.find_element_by_name('email2').get_attribute('value')
         email3 = wd.find_element_by_name('email3').get_attribute('value')
-        return Contact(first_name=first_name, last_name=last_name, address=address, id=id,
+        return Contact(id=id,first_name=first_name, last_name=last_name, address=address,
                        home_phone=home_phone, mobile_phone=mobile_phone,
                        work_phone=work_phone, secondary_phone=secondary_phone,
                        email1=email1, email2=email2, email3=email3)
